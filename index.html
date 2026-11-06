@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Aplikasi pemesanan akomodasi Vila Permai Puncak Bogor. Reservasi mudah, transparan, dan tanpa repot.">
+  <title>Vila Permai Puncak - Reservasi Vila Nyaman &amp; Sejuk</title>
+  
+  <!-- Lembar Gaya Eksternal -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Bagian Navigasi & Header -->
+  <header class="main-header">
+    <div class="container header-container">
+      <div class="brand">
+        <span class="brand__icon">🏡</span>
+        <div class="brand__text">
+          <span class="brand__name">Vila Permai</span>
+          <span class="brand__tagline">Kawasan Puncak, Bogor</span>
+        </div>
+      </div>
+      <nav class="main-nav" aria-label="Navigasi Utama">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="#beranda" class="nav-link">Beranda</a></li>
+          <li class="nav-item"><a href="#katalog" class="nav-link">Katalog Vila</a></li>
+          <li class="nav-item"><a href="#pemesanan" class="nav-link">Pesan Vila</a></li>
+          <li class="nav-item"><a href="#riwayat" class="nav-link">Riwayat Pesanan</a></li>
+          <li class="nav-item"><a href="#kontak" class="nav-link">Kontak</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Bagian Konten Utama -->
+  <main>
+    <!-- Seksi Hero / Beranda -->
+    <section id="beranda" class="hero-section">
+      <div class="container hero-container">
+        <div class="hero-content">
+          <span class="hero-badge">Usaha Keluarga Terpercaya sejak 2018</span>
+          <h1 class="hero-title">Istirahat Tenang dan Sejuk di Vila Permai Puncak</h1>
+          <p class="hero-desc">
+            Nikmati liburan tak terlupakan bersama keluarga di tiga pilihan unit vila eksklusif kami. 
+            Cek ketersediaan tanggal, estimasi harga transparan otomatis, dan pesan langsung tanpa ribet!
+          </p>
+          <div class="hero-actions">
+            <a href="#katalog" class="btn btn--secondary">Lihat Pilihan Vila</a>
+            <a href="#pemesanan" class="btn btn--primary">Pesan Sekarang</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seksi Katalog Vila -->
+    <section id="katalog" class="katalog-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Pilihan Unit Vila Permai</h2>
+          <p class="section-subtitle">
+            Seluruh data vila dirender secara dinamis dari sistem. Pilih unit yang paling sesuai dengan kebutuhan liburan Anda.
+          </p>
+        </div>
+
+        <!-- Kontrol Pencarian & Filter Vila -->
+        <div class="filter-box">
+          <div class="filter-box__group">
+            <label for="inputPencarian" class="filter-box__label">Cari Vila:</label>
+            <input 
+              type="text" 
+              id="inputPencarian" 
+              class="filter-box__input" 
+              placeholder="Ketik nama vila, lokasi, atau fasilitas (misal: Kolam, WiFi, 3 Kamar)..." 
+              aria-label="Cari vila"
+            >
+          </div>
+          <div class="filter-box__group">
+            <label for="filterStatus" class="filter-box__label">Status:</label>
+            <select id="filterStatus" class="filter-box__select" aria-label="Filter status ketersediaan">
+              <option value="semua">Semua Status</option>
+              <option value="Tersedia">Hanya yang Tersedia</option>
+              <option value="Terisi">Terisi</option>
+            </select>
+          </div>
+          <button type="button" id="btnResetFilter" class="btn btn--outline btn--sm">Reset Filter</button>
+        </div>
+
+        <!-- Wadah Rendering Kartu Vila (Dirender secara dinamis oleh JavaScript menggunakan createElement & appendChild) -->
+        <div id="daftarVila" class="villa-grid" aria-live="polite">
+          <!-- Elemen <article class="villa-card"> akan disuntikkan secara dinamis oleh script.js -->
+        </div>
+
+        <div id="statusKosong" class="empty-state" style="display: none;">
+          <p>⚠️ Tidak ada unit vila yang cocok dengan kata kunci pencarian Anda.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seksi Formulir Pemesanan & Ringkasan -->
+    <section id="pemesanan" class="booking-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Formulir Pemesanan Vila</h2>
+          <p class="section-subtitle">
+            Isi formulir berikut untuk mengecek ketersediaan dan menghitung rincian biaya secara otomatis.
+          </p>
+        </div>
+
+        <!-- Grid Dua Kolom: Form dan Ringkasan Biaya -->
+        <div class="booking-layout">
+          <!-- Kolom Formulir -->
+          <div class="booking-card">
+            <h3 class="booking-card__title">Data Reservasi Tamu</h3>
+
+            <!-- Kotak Notifikasi / Validasi Pesan Bahasa Indonesia -->
+            <div id="pesanNotifikasi" class="notification-box" style="display: none;" role="alert"></div>
+
+            <form id="formPemesanan" class="booking-form" novalidate>
+              <!-- Input Nama Pemesan -->
+              <div class="form-group">
+                <label for="namaTamu" class="form-label">
+                  Nama Lengkap Pemesan <span class="required">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="namaTamu" 
+                  name="namaTamu" 
+                  class="form-control" 
+                  placeholder="Contoh: Budi Santoso" 
+                  required
+                >
+                <small class="form-help">Wajib diisi, minimal 3 karakter.</small>
+              </div>
+
+              <!-- Pilihan Vila (Dropdown Otomatis dari JS) -->
+              <div class="form-group">
+                <label for="pilihanVila" class="form-label">
+                  Pilih Unit Vila <span class="required">*</span>
+                </label>
+                <select id="pilihanVila" name="pilihanVila" class="form-control" required>
+                  <option value="">-- Silakan Pilih Unit Vila --</option>
+                  <!-- Opsi pilihan vila akan diisi otomatis dari array JavaScript -->
+                </select>
+                <small class="form-help">Pilihan unit diambil otomatis dari basis data vila.</small>
+              </div>
+
+              <!-- Tanggal Check-in & Check-out -->
+              <div class="form-row">
+                <div class="form-group col-half">
+                  <label for="tglCheckIn" class="form-label">
+                    Tanggal Check-in <span class="required">*</span>
+                  </label>
+                  <input 
+                    type="date" 
+                    id="tglCheckIn" 
+                    name="tglCheckIn" 
+                    class="form-control" 
+                    required
+                  >
+                  <small class="form-help">Tidak boleh tanggal di masa lalu.</small>
+                </div>
+
+                <div class="form-group col-half">
+                  <label for="tglCheckOut" class="form-label">
+                    Tanggal Check-out <span class="required">*</span>
+                  </label>
+                  <input 
+                    type="date" 
+                    id="tglCheckOut" 
+                    name="tglCheckOut" 
+                    class="form-control" 
+                    required
+                  >
+                  <small class="form-help">Harus setelah tanggal check-in.</small>
+                </div>
+              </div>
+
+              <!-- Jumlah Tamu -->
+              <div class="form-group">
+                <label for="jumlahTamu" class="form-label">
+                  Jumlah Tamu (Orang) <span class="required">*</span>
+                </label>
+                <input 
+                  type="number" 
+                  id="jumlahTamu" 
+                  name="jumlahTamu" 
+                  class="form-control" 
+                  min="1" 
+                  max="10" 
+                  value="2" 
+                  required
+                >
+                <small class="form-help">Kapasitas pemesanan antara 1 sampai 10 orang.</small>
+              </div>
+
+              <!-- Tombol Aksi Formulir -->
+              <div class="form-actions">
+                <button type="button" id="btnCekKetersediaan" class="btn btn--secondary">
+                  🔍 Cek Ketersediaan
+                </button>
+                <button type="submit" id="btnPesan" class="btn btn--primary">
+                  📝 Pesan Sekarang
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Kolom Ringkasan Biaya Otomatis (Live Calculation) -->
+          <div class="summary-card">
+            <h3 class="summary-card__title">Ringkasan &amp; Perhitungan Biaya</h3>
+            <p class="summary-card__note">
+              Perhitungan di bawah ini diperbarui secara otomatis sebelum tombol pemesanan ditekan.
+            </p>
+
+            <div class="summary-list">
+              <div class="summary-item">
+                <span class="summary-item__label">Vila Pilihan:</span>
+                <span id="summaryNamaVila" class="summary-item__val">- Belum Dipilih -</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-item__label">Harga per Malam:</span>
+                <span id="summaryHargaMalam" class="summary-item__val">Rp 0</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-item__label">Durasi Menginap:</span>
+                <span id="summaryDurasiMalam" class="summary-item__val">0 Malam</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-item__label">Jumlah Tamu:</span>
+                <span id="summaryJumlahTamu" class="summary-item__val">0 Orang</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-item__label">Status Ketersediaan:</span>
+                <span id="summaryStatusVila" class="summary-item__val badge badge--neutral">-</span>
+              </div>
+              <hr class="summary-divider">
+              <div class="summary-total">
+                <span class="summary-total__label">Estimasi Total Biaya:</span>
+                <span id="summaryTotalBiaya" class="summary-total__val">Rp 0</span>
+              </div>
+            </div>
+
+            <div class="summary-guide">
+              <p>💡 <em>Catatan: Harga sudah termasuk pajak &amp; layanan kebersihan. Jam check-in pukul 14.00 WIB dan check-out pukul 12.00 WIB.</em></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seksi Riwayat Pesanan Tersimpan (localStorage) -->
+    <section id="riwayat" class="history-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Riwayat Pemesanan Anda</h2>
+          <p class="section-subtitle">
+            Daftar pesanan aktif yang tercatat di peramban web (*localStorage* perangkat Anda).
+          </p>
+        </div>
+
+        <div class="history-card">
+          <div class="history-card__header">
+            <h3 class="history-card__title">Daftar Reservasi Terkirim</h3>
+            <button type="button" id="btnHapusRiwayat" class="btn btn--outline btn--sm btn--danger">
+              🗑️ Hapus Riwayat
+            </button>
+          </div>
+
+          <div id="tabelRiwayatContainer" class="table-responsive">
+            <!-- Tabel riwayat pesanan akan diisi oleh JavaScript -->
+            <table class="history-table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>ID Pesanan</th>
+                  <th>Nama Tamu</th>
+                  <th>Unit Vila</th>
+                  <th>Check-In</th>
+                  <th>Check-Out</th>
+                  <th>Malam</th>
+                  <th>Tamu</th>
+                  <th>Total Biaya</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="tabelRiwayatBody">
+                <!-- Data baris pesanan -->
+              </tbody>
+            </table>
+          </div>
+
+          <div id="riwayatKosong" class="empty-state">
+            <p>Belum ada riwayat pesanan. Silakan lakukan pemesanan melalui formulir di atas.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bagian Footer Kontak Pemilik Vila (Pak Hendra) -->
+  <footer id="kontak" class="main-footer">
+    <div class="container footer-container">
+      <div class="footer-col">
+        <h3 class="footer-title">Vila Permai Puncak</h3>
+        <p class="footer-text">
+          Akomodasi keluarga dengan pemandangan pegunungan asri, udara segar bebas polusi, 
+          dan fasilitas lengkap untuk kehangatan liburan Anda.
+        </p>
+        <p class="footer-text">
+          <strong>Pemilik Usaha:</strong> Pak Hendra &amp; Keluarga
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-title">Kontak &amp; Informasi Reservasi</h3>
+        <ul class="footer-contact-list">
+          <li>📍 <strong>Lokasi:</strong> Jl. Raya Puncak KM 84, Cisarua, Kabupaten Bogor, Jawa Barat 16750</li>
+          <li>📞 <strong>Telepon / WhatsApp:</strong> +62 812-3456-7890 (Pak Hendra)</li>
+          <li>✉️ <strong>Email:</strong> info@vilapermai-puncak.id</li>
+          <li>⏰ <strong>Jam Layanan Tamu:</strong> 07.00 - 21.00 WIB</li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-title">Informasi Akademik</h3>
+        <p class="footer-text">
+          Ujian Tengah Semester Ganjil T.A. 2026/2027<br>
+          Mata Kuliah: <strong>Teknologi Web (200551232)</strong><br>
+          Pengembang: <strong>Raihan Nur Falah (NIM: 24011130492 - MI5BP)</strong><br>
+          Program Studi Manajemen Informatika<br>
+          Fakultas Teknologi Informasi dan Digital<br>
+          <strong>Universitas Bani Saleh</strong>
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container footer-bottom__inner">
+        <p>&copy; 2026 Vila Permai Puncak. Hak Cipta Dilindungi Undang-Undang.</p>
+        <p>Dirancang untuk kemudahan calon tamu dan pengelolaan Pak Hendra.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Berkas Skrip Logika JavaScript Eksternal -->
+  <script src="script.js"></script>
+</body>
+</html>
