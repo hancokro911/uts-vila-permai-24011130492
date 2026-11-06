@@ -1,0 +1,938 @@
+/* ==========================================================================
+   Vila Permai - Lembar Gaya Utama (style.css)
+   Ujian Tengah Semester - Teknologi Web (Universitas Bani Saleh)
+   Standar: BEM Naming, Box-Model Konsisten, Responsive (2 Breakpoints), Keyframes
+   ========================================================================== */
+
+/* --- 1. RESET DAN PENGATURAN BOX MODEL --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Palet Warna Primer & Sekunder Bertema Alam Puncak */
+  --color-primary: #1e5e3a;        /* Pine Forest Green */
+  --color-primary-dark: #133e26;
+  --color-primary-light: #e8f5ed;
+  --color-secondary: #c98a2c;      /* Warm Amber / Gold */
+  --color-secondary-hover: #b0741e;
+  
+  /* Warna Netral & Latar Belakang */
+  --color-bg-body: #f8faf9;
+  --color-bg-surface: #ffffff;
+  --color-text-main: #243028;
+  --color-text-muted: #617367;
+  --color-border: #dbe4dd;
+  --color-border-focus: #1e5e3a;
+
+  /* Warna Status */
+  --color-success: #167a44;
+  --color-success-bg: #eafaf1;
+  --color-danger: #b42318;
+  --color-danger-bg: #fef3f2;
+  --color-warning: #b54708;
+  --color-warning-bg: #fffaeb;
+
+  /* Tipografi */
+  --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  
+  /* Bayangan (Shadows) */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.09);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.12);
+
+  /* Radius Sudut */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-family-base);
+  background-color: var(--color-bg-body);
+  color: var(--color-text-main);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- 2. TATA LETAK UMUM & CONTAINER --- */
+.container {
+  width: 100%;
+  max-width: 1140px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* --- 3. HEADER & NAVIGASI SEMANTIK --- */
+.main-header {
+  background-color: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand__icon {
+  font-size: 1.8rem;
+}
+
+.brand__name {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.2;
+}
+
+.brand__tagline {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.main-nav {
+  display: block;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  gap: 24px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--color-text-main);
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+/* --- 4. HERO SECTION --- */
+.hero-section {
+  background: linear-gradient(135deg, #133e26 0%, #1e5e3a 60%, #2f7d50 100%);
+  color: #ffffff;
+  padding-top: 60px;
+  padding-bottom: 70px;
+  text-align: center;
+}
+
+.hero-container {
+  max-width: 800px;
+}
+
+.hero-badge {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+  letter-spacing: 0.5px;
+}
+
+.hero-title {
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 16px;
+}
+
+.hero-desc {
+  font-size: 1.08rem;
+  line-height: 1.6;
+  opacity: 0.92;
+  margin-bottom: 28px;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* --- 5. TIPOGRAFI & SECTION HEADER --- */
+.section-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.section-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin-bottom: 8px;
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --- 6. KATALOG VILA & ARTICLE CARDS --- */
+.katalog-section {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: var(--color-bg-body);
+}
+
+/* Kotak Filter & Pencarian */
+.filter-box {
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  box-shadow: var(--shadow-sm);
+}
+
+.filter-box__group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 220px;
+}
+
+.filter-box__label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+  white-space: nowrap;
+}
+
+.filter-box__input,
+.filter-box__select {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-body);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.filter-box__input:focus,
+.filter-box__select:focus {
+  outline: none;
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 3px rgba(30, 94, 58, 0.15);
+}
+
+/* Grid Kartu Vila */
+.villa-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* Kartu Vila (Article) */
+.villa-card {
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  animation: cardFadeIn 0.5s ease-out both;
+}
+
+.villa-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary);
+}
+
+.villa-card__media {
+  height: 160px;
+  background: linear-gradient(135deg, #a3c4b0 0%, #6f9c80 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-size: 3.5rem;
+}
+
+.villa-card__badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge--available {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid #a6f4c5;
+  animation: pulseBadge 2.5s infinite ease-in-out;
+}
+
+.badge--booked {
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger);
+  border: 1px solid #fecdca;
+}
+
+.villa-card__body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.villa-card__location {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.villa-card__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin-bottom: 8px;
+}
+
+.villa-card__type {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-secondary);
+  margin-bottom: 12px;
+}
+
+.villa-card__facilities {
+  list-style: none;
+  margin-bottom: 18px;
+  flex-grow: 1;
+}
+
+.villa-card__facility-item {
+  font-size: 0.85rem;
+  color: var(--color-text-main);
+  padding: 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.villa-card__footer {
+  border-top: 1px solid var(--color-border);
+  padding-top: 14px;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.villa-card__price-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.villa-card__price-label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.villa-card__price {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: var(--color-bg-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  font-size: 1rem;
+}
+
+/* --- 7. TOMBOL (BUTTONS) & INTERAKSI --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn--primary {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.btn--primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.btn--secondary {
+  background-color: var(--color-secondary);
+  color: #ffffff;
+}
+
+.btn--secondary:hover {
+  background-color: var(--color-secondary-hover);
+}
+
+.btn--outline {
+  background-color: transparent;
+  border-color: var(--color-border);
+  color: var(--color-text-main);
+}
+
+.btn--outline:hover {
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn--danger {
+  border-color: #fecdca;
+  color: var(--color-danger);
+}
+
+.btn--danger:hover {
+  background-color: var(--color-danger-bg);
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
+.btn--sm {
+  padding: 7px 14px;
+  font-size: 0.85rem;
+}
+
+/* --- 8. FORMULIR PEMESANAN & RINGKASAN BIAYA --- */
+.booking-section {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: #f0f4f1;
+}
+
+.booking-layout {
+  display: grid;
+  grid-template-columns: 1.25fr 0.95fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.booking-card,
+.summary-card,
+.history-card {
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 26px;
+  box-shadow: var(--shadow-md);
+}
+
+.booking-card__title,
+.summary-card__title,
+.history-card__title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin-bottom: 12px;
+}
+
+.summary-card__note {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: 20px;
+}
+
+/* Formulir Elemen */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.col-half {
+  flex: 1;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+  margin-bottom: 6px;
+}
+
+.required {
+  color: var(--color-danger);
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--color-text-main);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 3px rgba(30, 94, 58, 0.15);
+}
+
+.form-control.is-invalid {
+  border-color: var(--color-danger);
+  background-color: #fffbfa;
+}
+
+.form-help {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+/* Kotak Notifikasi / Validasi */
+.notification-box {
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 20px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  animation: fadeInDown 0.3s ease-out;
+}
+
+.notification-box--error {
+  background-color: var(--color-danger-bg);
+  border: 1px solid #fecdca;
+  color: var(--color-danger);
+}
+
+.notification-box--success {
+  background-color: var(--color-success-bg);
+  border: 1px solid #a6f4c5;
+  color: var(--color-success);
+}
+
+.notification-box--info {
+  background-color: #f0f9ff;
+  border: 1px solid #b9e6fe;
+  color: #026aa2;
+}
+
+/* Detail Ringkasan Biaya */
+.summary-list {
+  background-color: var(--color-bg-body);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 0.92rem;
+}
+
+.summary-item__label {
+  color: var(--color-text-muted);
+}
+
+.summary-item__val {
+  font-weight: 600;
+  color: var(--color-text-main);
+  text-align: right;
+}
+
+.summary-divider {
+  border: none;
+  border-top: 1px dashed var(--color-border);
+  margin: 12px 0;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 6px;
+}
+
+.summary-total__label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+.summary-total__val {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.summary-guide {
+  background-color: #fffbeb;
+  border-left: 4px solid var(--color-secondary);
+  padding: 12px 14px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.85rem;
+  color: #713f12;
+}
+
+/* Badge Status Netral / Dinamis */
+.badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.badge--neutral {
+  background-color: #eaecf0;
+  color: #475467;
+}
+
+/* --- 9. TABEL RIWAYAT PEMESANAN (localStorage) --- */
+.history-section {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: var(--color-bg-surface);
+}
+
+.history-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.history-table th,
+.history-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.history-table th {
+  background-color: var(--color-bg-body);
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+.history-table tbody tr:hover {
+  background-color: var(--color-primary-light);
+}
+
+/* --- 10. FOOTER SEMANTIK --- */
+.main-footer {
+  background-color: #17281f;
+  color: #e3ede6;
+  padding-top: 50px;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: 1.2fr 1.3fr 1fr;
+  gap: 36px;
+  padding-bottom: 40px;
+}
+
+.footer-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 16px;
+  position: relative;
+  padding-bottom: 8px;
+}
+
+.footer-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 36px;
+  height: 2px;
+  background-color: var(--color-secondary);
+}
+
+.footer-text {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  opacity: 0.88;
+  margin-bottom: 12px;
+}
+
+.footer-contact-list {
+  list-style: none;
+  font-size: 0.9rem;
+}
+
+.footer-contact-list li {
+  margin-bottom: 10px;
+  line-height: 1.5;
+  opacity: 0.88;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px 0;
+  font-size: 0.82rem;
+  color: #9eb5a5;
+}
+
+.footer-bottom__inner {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* --- 11. ANIMASI DAN KEYFRAMES --- */
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseBadge {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(22, 122, 68, 0.4);
+  }
+  50% {
+    transform: scale(1.03);
+    box-shadow: 0 0 0 5px rgba(22, 122, 68, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(22, 122, 68, 0);
+  }
+}
+
+/* ==========================================================================
+   --- 12. DESAIN RESPONSIF (BREAKPOINTS) ---
+   Breakpoint 1: max-width 768px (Layar Tablet)
+   Breakpoint 2: max-width 480px (Layar Ponsel / Smartphone)
+   ========================================================================== */
+
+/* Breakpoint 1: Tablet (Maksimal 768px) */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    gap: 14px;
+    text-align: center;
+  }
+
+  .nav-list {
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero-title {
+    font-size: 1.95rem;
+  }
+
+  /* Kartu vila berubah dari 3 kolom menjadi 2 kolom */
+  .villa-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  /* Form dan ringkasan berubah dari 2 kolom menjadi 1 kolom vertikal */
+  .booking-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* Footer kolom 3 menjadi 1 atau 2 kolom */
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+}
+
+/* Breakpoint 2: Layar Ponsel Sempit (Maksimal 480px) */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.6rem;
+  }
+
+  .hero-desc {
+    font-size: 0.95rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  /* Kartu vila menjadi 1 kolom penuh di ponsel */
+  .villa-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Filter form menjadi vertikal */
+  .filter-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-box__group {
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 100%;
+  }
+
+  /* Input form check-in dan check-out berubah dari 2 kolom menjadi 1 kolom */
+  .form-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+
+  .booking-card,
+  .summary-card,
+  .history-card {
+    padding: 18px 14px;
+  }
+
+  /* Footer menjadi 1 kolom tunggal */
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .footer-bottom__inner {
+    flex-direction: column;
+    text-align: center;
+  }
+}
